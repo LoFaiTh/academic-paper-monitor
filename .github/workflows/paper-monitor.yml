@@ -28,14 +28,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Update config with GitHub token
-        python -c "
-import json
-config = json.load(open('config.json'))
-config['github']['enabled'] = True
-config['github']['token'] = '$GITHUB_TOKEN'
-json.dump(config, open('config.json', 'w'), indent=2)
-"
+        python -c "import json; c=json.load(open('config.json')); c['github']['enabled']=True; c['github']['token']='${GITHUB_TOKEN}'; json.dump(c, open('config.json','w'), indent=2)"
         python paper_monitor.py
         
     - name: Deploy to GitHub Pages
