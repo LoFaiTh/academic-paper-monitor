@@ -41,12 +41,9 @@ jobs:
         # Create gh-pages branch if it doesn't exist
         git checkout --orphan gh-pages || git checkout gh-pages
         
-        # Copy the generated HTML file
-        cp index.html ./
-        
         # Add and commit
         git add index.html
-        git commit -m "Update paper monitor report - $(date)"
+        git commit -m "Update paper monitor report - $(date)" || echo "No changes to commit"
         
         # Push to gh-pages branch
         git push origin gh-pages --force
