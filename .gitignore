@@ -47,7 +47,6 @@ Thumbs.db
 # Project specific
 papers_data.json
 report.txt
-index.html
 deploy.sh
 config_local.json
 
