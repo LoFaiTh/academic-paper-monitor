@@ -45,8 +45,8 @@ jobs:
         git add index.html
         git commit -m "Update paper monitor report - $(date)" || echo "No changes to commit"
         
-        # Push to gh-pages branch
-        git push origin gh-pages --force
+        # Push to gh-pages branch using token
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/LoFaiTh/academic-paper-monitor.git gh-pages --force
         
     - name: Upload report as artifact
       uses: actions/upload-artifact@v4
