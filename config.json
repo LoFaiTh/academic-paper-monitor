@@ -11,7 +11,7 @@
   },
   "slack": {
     "enabled": false,
-    "webhook_url": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
+    "webhook_url": "",
     "channel": "#general",
     "username": "Paper Monitor Bot"
   },
@@ -27,10 +27,10 @@
     ]
   },
   "github": {
-    "enabled": false,
+    "enabled": true,
     "repo_name": "your-username/academic-paper-monitor",
     "branch": "main",
     "pages_branch": "gh-pages",
-    "token": "your-github-token"
+    "token": ""
   }
 }

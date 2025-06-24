@@ -26,21 +26,16 @@ jobs:
         
     - name: Run paper monitor
       env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        # Update config with secrets if available
-        if [ ! -z "$SLACK_WEBHOOK_URL" ]; then
-          python -c "
+        # Update config with GitHub token
+        python -c "
 import json
 config = json.load(open('config.json'))
-config['slack']['enabled'] = True
-config['slack']['webhook_url'] = '$SLACK_WEBHOOK_URL'
 config['github']['enabled'] = True
 config['github']['token'] = '$GITHUB_TOKEN'
 json.dump(config, open('config.json', 'w'), indent=2)
 "
-        fi
         python paper_monitor.py
         
     - name: Deploy to GitHub Pages
