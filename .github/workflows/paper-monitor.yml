@@ -1,0 +1,58 @@
+name: Paper Monitor
+
+on:
+  schedule:
+    # Run daily at 9 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  monitor-papers:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run paper monitor
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python -c "import json; c=json.load(open('config.json')); c['github']['enabled']=True; c['github']['token']='${GITHUB_TOKEN}'; json.dump(c, open('config.json','w'), indent=2)"
+        python paper_monitor.py
+        
+    - name: Deploy to GitHub Pages
+      if: success()
+      run: |
+        # Configure git
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        
+        # Create gh-pages branch if it doesn't exist
+        git checkout --orphan gh-pages || git checkout gh-pages
+        
+        # Add and commit
+        git add index.html
+        git commit -m "Update paper monitor report - $(date)" || echo "No changes to commit"
+        
+        # Push to gh-pages branch using token
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/LoFaiTh/academic-paper-monitor.git gh-pages --force
+        
+    - name: Upload report as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: paper-report
+        path: |
+          report.txt
+          index.html
+        retention-days: 7 
