@@ -1,0 +1,36 @@
+{
+  "email": {
+    "enabled": false,
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 587,
+    "sender_email": "your-email@gmail.com",
+    "sender_password": "your-app-password",
+    "recipient_emails": [
+      "your-email@gmail.com"
+    ]
+  },
+  "slack": {
+    "enabled": false,
+    "webhook_url": "",
+    "channel": "#general",
+    "username": "Paper Monitor Bot"
+  },
+  "monitoring": {
+    "days_back": 7,
+    "max_results_per_query": 30,
+    "categories": [
+      "cs.CV",
+      "cs.RO",
+      "cs.GR",
+      "cs.AI",
+      "cs.LG"
+    ]
+  },
+  "github": {
+    "enabled": true,
+    "repo_name": "your-username/academic-paper-monitor",
+    "branch": "main",
+    "pages_branch": "gh-pages",
+    "token": ""
+  }
+}
